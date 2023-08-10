@@ -1,0 +1,26 @@
+<section class="card">
+  {{!-- < href="/blogs/{{id}}"> --}}
+    <h3>{{name}}</h3>
+    <br>
+    <p>{{description}}</p>
+    <p>Date Created: {{ format_date date_created}}</p>
+    <p> Post By: {{user.name}}</p>
+</section>
+
+{{#if logged_in}}
+<form class="new-comment-form">
+  <div>
+    <label for="comment">Comment</label>
+    <input type="text" id="comment" placeholder="Type your comment here"/>
+    <button id="submit-comment">Submit</button>
+  </div>
+</form>
+{{else}}
+<a href="/login">Log in to add a comment</a>
+{{/if}}
+
+<section class="card">
+  {{#each blog.comments as |comment|}}
+  {{> comment-details}}
+  {{/each}}
+</section>
