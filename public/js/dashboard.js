@@ -25,6 +25,7 @@ const delButtonHandler = async (event) => {
   if (event.target.hasAttribute('data-id')) {
     const id = event.target.getAttribute('data-id');
 
+
     const response = await fetch(`/api/blogs/${id}`, {
       method: 'DELETE',
     });
@@ -37,10 +38,37 @@ const delButtonHandler = async (event) => {
   }
 };
 
-document
-  .querySelector('.new-blog-form')
-  .addEventListener('submit', newFormHandler);
+const updButtonHandler = async (event) => {
+  event.preventDefault();
 
-document
-  .querySelector('.blog-list')
-  .addEventListener('click', delButtonHandler);
+  const name = document.querySelector('#blog-name').value.trim();
+  const description = document.querySelector('#blog-desc').value.trim();
+  const blogId = event.target.getAttribute('data-id');
+
+  if (name && description && blogId) {
+    const response = await fetch(`/api/blogs/${blogId}`, {
+      method: 'PUT',
+      body: JSON.stringify({name, description}),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.ok) {
+      document.location.replace('/dashboard');
+    } else {
+      alert('Failed to update blog');
+    }
+  }
+};
+
+document.querySelectorAll('.blog-update').forEach(button => {
+  button.addEventListener('click', updButtonHandler);
+});
+
+
+document.querySelector('.new-blog-form').addEventListener('submit', newFormHandler);
+
+document.querySelectorAll('.blog-delete').forEach(button => {
+  button.addEventListener('click', delButtonHandler);
+});
