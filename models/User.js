@@ -1,13 +1,15 @@
+// import sequelize and bcrypt
 const { Model, DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
 const sequelize = require('../config/connection');
-
+// User model extends base Model
 class User extends Model {
+  // Instance method to check hashes password against login password
   checkPassword(loginPw) {
     return bcrypt.compareSync(loginPw, this.password);
   }
 }
-
+// User model schema with id, user name, email, and password columns
 User.init(
   {
     id: {
@@ -37,6 +39,7 @@ User.init(
     },
   },
   {
+    // hash password before create or update user with salt round of 10 and return new or updated user data
     hooks: {
       beforeCreate: async (newUserData) => {
         newUserData.password = await bcrypt.hash(newUserData.password, 10);
@@ -54,5 +57,5 @@ User.init(
     modelName: 'user',
   }
 );
-
+// export User model
 module.exports = User;

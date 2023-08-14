@@ -7,22 +7,22 @@
 <div class="row mt-4">
   <div class="col-md-6">
     <h3>Create a New blog:</h3>
-
+    {{!-- form to create new blog post --}}
     <form class="form new-blog-form">
       <div class="form-group">
         <label for="blog-name">Blog Post:</label>
         <input class="form-input" type="text" id="blog-name" name="blog-name" />
       </div>
       <div class="form-group">
-        <label for="blog-desc">description:</label>
+        <label for="blog-desc">Description:</label>
         <textarea class="form-input" id="blog-desc" name="blog-desc"></textarea>
       </div>
       <div class="form-group">
-        <button type="submit" class="btn btn-primary">Create</button>
+        <button type="submit" class="btn btn-primary" id="createBtn">Create</button>
       </div>
     </form>
   </div>
-
+  {{!-- displays any existing blogs from the user --}}
   {{#if blogs.length}}
   <div class="col-md-6 blog-list">
     <h3>Current blogs:</h3>
@@ -32,10 +32,10 @@
       <div class="col-md-8">
         <h4><a href="/blog/{{blog.id}}">{{blog.name}}</a></h4>
       </div>
+      {{!-- update and delete blog posts --}}
       <div class="col-md-4">
+        <a href='/edit/{{blog.id}}'>UPDATE</a>  
         <button class="btn btn-sm btn-danger blog-delete" data-id="{{blog.id}}">DELETE</button>
-        <a href='/edit/{{blog.id}}'>UPDATE</a>
-        
       </div>
     </div>
     {{/each}}

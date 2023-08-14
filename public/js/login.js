@@ -1,18 +1,19 @@
+// function triggered on login form submit
 const loginFormHandler = async (event) => {
   event.preventDefault();
 
-  // Collect values from the login form
+  // collect login form values
   const email = document.querySelector('#email-login').value.trim();
   const password = document.querySelector('#password-login').value.trim();
-
+  // ensure values exist
   if (email && password) {
-    // Send a POST request to the API endpoint
+    // POST request to login route
     const response = await fetch('/api/users/login', {
       method: 'POST',
       body: JSON.stringify({ email, password }),
       headers: { 'Content-Type': 'application/json' },
     });
-
+    // redirect on login success, else alert error
     if (response.ok) {
       document.location.replace('/dashboard');
     } else {
@@ -20,33 +21,5 @@ const loginFormHandler = async (event) => {
     }
   }
 };
-
-// const signupFormHandler = async (event) => {
-//   event.preventDefault();
-
-//   const name = document.querySelector('#name-signup').value.trim();
-//   const email = document.querySelector('#email-signup').value.trim();
-//   const password = document.querySelector('#password-signup').value.trim();
-
-//   if (name && email && password) {
-//     const response = await fetch('/api/users', {
-//       method: 'POST',
-//       body: JSON.stringify({ name, email, password }),
-//       headers: { 'Content-Type': 'application/json' },
-//     });
-
-//     if (response.ok) {
-//       document.location.replace('/');
-//     } else {
-//       alert(response.statusText);
-//     }
-//   }
-// };
-
-document
-  .querySelector('.login-form')
-  .addEventListener('submit', loginFormHandler);
-
-// document
-//   .querySelector('.signup-form')
-//   .addEventListener('submit', signupFormHandler);
+// listen for submit event on login form
+document.querySelector('.login-form').addEventListener('submit', loginFormHandler);
